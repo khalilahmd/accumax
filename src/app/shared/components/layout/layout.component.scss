@@ -1,0 +1,24 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+
+    .main-content {
+      display: flex;
+      flex: 1;
+
+      app-sidebar {
+        width: auto;
+      }
+
+      .router-content {
+        flex: 1;
+        padding: 5px;
+        background: rgb(255, 255, 255);
+        overflow-y: auto;
+      }
+    }
+  }
+  
+  
+

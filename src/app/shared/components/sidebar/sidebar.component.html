@@ -1,0 +1,22 @@
+  <div class="sidenav-container">
+    <div #sidenav class="sidenav">
+      <div class="nav-list">
+        @for (item of menuItems; track trackByFn) {
+          <div class="nav-item" [routerLink]="item.route" 
+          routerLinkActive="active" 
+          (click)="onNavItemClick(item)">
+            <mat-icon class="item-icon">{{ item.icon }}</mat-icon>
+          @if (showText) {
+            <span class="item-text">{{ item.name }}</span>
+          }
+        </div>
+        }
+      </div>
+      <!-- <div class="toggle-button-container">
+        <button mat-icon-button (click)="toggleText()" class="toggle-button">
+          <mat-icon>{{ showText ?  'menu_open' : 'menu' }}</mat-icon>
+        </button>
+      </div> -->
+    </div>
+  </div>
+  

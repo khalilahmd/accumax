@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="left">
+      <img src="assets/landingPage.jpg" alt="Description of image">
+    </div>
+    <div class="right">
+      <mat-card class="validation-card">
+        <h1 class="validation-title">Validation</h1>
+        <p>Please enter the code sent to your registered mobile number.</p>
+        <form [formGroup]="validationForm" (ngSubmit)="onSubmit()">
+          <div class="code-container">
+            <input class="code-input" maxlength="1" formControlName="code1" type="text">
+            <input class="code-input" maxlength="1" formControlName="code2" type="text">
+            <input class="code-input" maxlength="1" formControlName="code3" type="text">
+            <input class="code-input" maxlength="1" formControlName="code4" type="text">
+            <input class="code-input" maxlength="1" formControlName="code5" type="text">
+            <input class="code-input" maxlength="1" formControlName="code6" type="text">
+          </div>
+          @if (!isCodeValid) {
+            <mat-error class="error-message">
+              Please enter a valid 6-digit code.
+            </mat-error>
+          }
+          <button mat-raised-button color="primary" type="submit" [disabled]="validationForm.invalid">
+            Verify Code
+          </button>
+        </form>
+      </mat-card>
+    </div>
+  
+  </div>
+  

@@ -1,0 +1,31 @@
+<div class="container">
+    <div class="left">
+      <img src="assets/landingPage.jpg" alt="landingPage">
+    </div>
+    <div class="right">
+        <mat-card class="login-card">
+          <h1 class="login-title">Login</h1>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <mat-form-field class="form-field" appearance="fill">
+              <mat-label>Email</mat-label>
+              <input matInput formControlName="email" type="email" required />
+              @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched || emailExist == false) {
+                <mat-error>
+                  Please enter a valid email
+                </mat-error>
+              }
+            </mat-form-field>
+      
+      
+            <button mat-raised-button color="primary" type="submit" [disabled]="loginForm.invalid">
+              Send Verification Code
+            </button>
+          </form>
+      
+          <div class="account-option">
+            <span>Don't have an account? <span class="register-button" (click)="navigateToSignup()">Register here</span></span>
+          </div>
+        </mat-card>
+      </div>
+  
+  </div>

@@ -1,0 +1,17 @@
+.iframe-container {
+    position: fixed;
+    bottom: 40px;
+    right: 10px;
+    width: 25%;
+    height: 55%;
+    max-height: fit-content;
+    border: 2px solid rgb(197, 197, 218);
+    padding: 5px;
+    border-radius: 2%;
+
+    iframe {
+      height: 100%;
+      width: 100%;
+    }
+  }
+  

@@ -1,0 +1,45 @@
+
+<div class="table-container">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+      @for (column of displayedColumns; track $index) {
+          <ng-container [matColumnDef]="column.field">
+          <th mat-header-cell *matHeaderCellDef (click)="sortData(column.field)">
+          {{ column.header }}
+          @if (column.sortable) {
+            <mat-icon class="sort-icon">
+              {{ sortDirection[column.field] === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+            </mat-icon>
+          }
+        </th>
+            <td mat-cell *matCellDef="let element">
+              @if (column.field === 'icon') {
+                  <ng-container>
+                    <mat-icon>{{ element[column.field] }}</mat-icon>
+                  </ng-container>
+              }    
+              @if (column.field !== 'icon' && !column.actions) {
+                  <ng-container>
+                      {{ element[column.field] }}
+                  </ng-container>
+              }
+              @if (column.actions) {
+                  <ng-container>
+                      @for (action of column.actions; track $index) {
+                          <button mat-icon-button (click)="action.callback(element)">
+                            <mat-icon>{{ action.icon }}</mat-icon>
+                          </button>
+                      }
+                  </ng-container>
+              }
+            </td>
+          </ng-container>
+  
+      }
+      <tr mat-header-row *matHeaderRowDef="columnFields" class="header-row"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnFields;"></tr>
+    </table>
+
+</div>
+
+  

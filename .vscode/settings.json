@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/7a43e6af-e487-43d4-b4b4-824193cb0f04/resourceGroups/demoAccumax/providers/Microsoft.Web/sites/demoAccumax",
+    "appService.deploySubpath": "."
+}

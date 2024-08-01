@@ -1,0 +1,50 @@
+<mat-toolbar class="header-toolbar">
+  <div class="header-content">
+    <span class="icon">
+      <img src="assets/accumax-nav.png" alt="Icon" />
+    </span>
+    <span class="spacer"></span>
+    <div class="buttons">
+      <button mat-button (click)="action1()">Examples</button>
+      <button mat-button (click)="action2()">Documentation</button>
+      <button mat-button (click)="action3()">Help</button>
+    </div>
+    <button mat-button class="username" [matMenuTriggerFor]="menu">Welcome {{ username }}</button>
+
+  <mat-menu #menu="matMenu">
+    @for (item of menuItems; track $index) {
+      <ng-container>
+        @if (!item.submenu) {
+          <button mat-menu-item (click)="item.action">
+            @if (item.icon) {
+              <mat-icon>{{ item.icon }}</mat-icon>
+            }
+            {{ item.text }}
+          </button>
+        }
+        @if (item.submenu) {
+          <button mat-menu-item [matMenuTriggerFor]="subMenu">
+            {{ item.text }}
+          </button>
+        }
+        <mat-menu #subMenu="matMenu">
+          @for (subItem of item.submenu; track $index) {
+            <ng-container>
+              <button mat-menu-item (click)="subItem.action">
+                @if (subItem.icon) {
+                  <mat-icon>{{ subItem.icon }}</mat-icon>
+                }
+                {{ subItem.text }}
+              </button>
+            </ng-container>
+          }
+        </mat-menu>
+      </ng-container>
+    }
+  </mat-menu>
+
+  </div>
+</mat-toolbar>
+
+
+  
