@@ -18,7 +18,7 @@ import { Router } from '@angular/router';
     MatButtonModule,
     MatCardModule],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   emailExist: boolean = true;

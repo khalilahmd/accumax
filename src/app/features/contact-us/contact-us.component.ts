@@ -8,7 +8,7 @@ import { FileUploaderComponent } from "../../shared/components/file-uploader/fil
   standalone: true,
   imports: [MatCardModule, CommonModule, FileUploaderComponent],
   templateUrl: './contact-us.component.html',
-  styleUrl: './contact-us.component.css'
+  styleUrl: './contact-us.component.scss'
 })
 export class ContactUsComponent {
 

@@ -1,53 +1,86 @@
-<mat-toolbar color="primary">
-  <span>Directory Structure</span>
-</mat-toolbar>
-
-<div class="container">
-  <div class="tree-container">
-    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
-        <li>
-          <div class="mat-tree-node" (click)="onNodeClick(node)">
-            <mat-icon class="folder-icon">folder</mat-icon>
-            {{node.name}}
-          </div>
+<div class="directory-viewer">
+  <div class="sidebar">
+    <h2>{{source}}</h2>
+    <ul>
+      @for (dir of directories; track $index) {
+        <li (click)="openDirectory($event, dir)">
+          <i class="material-icons">{{ (dir.isExpanded && dir.subDirectories) ? 'folder_open' : 'folder' }}</i>
+          {{ dir.name }}
+          <!-- @if (dir.subDirectories) {
+            <span class="toggle-icon">
+              {{ dir.isExpanded ? '-' : '+' }}
+            </span>
+          } -->
+          @if (dir.isExpanded && dir.subDirectories) {
+            <ul>
+              @for (subDir of dir.subDirectories; track $index) {
+                <li (click)="openDirectory($event, subDir)">
+                  <i class="material-icons">{{ (subDir.isExpanded && subDir.subDirectories) ? 'folder_open' : 'folder' }}</i>
+                  {{ subDir.name }}
+                  <!-- @if (subDir.subDirectories) {
+                    <span class="toggle-icon">
+                      {{ dir.isExpanded ? '-' : '+' }}
+                    </span>
+                  } -->
+                  @if (subDir.isExpanded && subDir.subDirectories) {
+                    <ul>
+                      @for (subSubDir of subDir.subDirectories; track $index) {
+                        <li (click)="openDirectory($event, subSubDir)">
+                          <i class="material-icons">{{ ( subSubDir.subDirectories) ? 'folder_open' : 'folder' }}</i>
+                          {{ subSubDir.name }} 
+                           <!-- @if (subSubDir.subDirectories) {
+                            <span class="toggle-icon">
+                              {{ dir.isExpanded ? '-' : '+' }}
+                            </span>
+                          } -->
+                          <!-- Add more levels as needed -->
+                        </li>
+                      }
+                    </ul>
+                  }
+                </li>
+              }
+            </ul>
+          }
         </li>
-      </mat-tree-node>
 
-      <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
-        <li>
-          <div class="mat-tree-node" (click)="onNodeClick(node)">
-            <mat-icon class="folder-icon" [class.opened]="treeControl.isExpanded(node)">
-              folder
-            </mat-icon>
-            <button mat-icon-button matTreeNodeToggle>
-              <mat-icon>
-                {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-              </mat-icon>
-            </button>
-            {{node.name}}
-          </div>
-          <ul [class.tree-invisible]="!treeControl.isExpanded(node)">
-            <ng-container matTreeNodeOutlet></ng-container>
-          </ul>
-        </li>
-      </mat-nested-tree-node>
-    </mat-tree>
+      }
+    </ul>
   </div>
-  <div class="content-container" *ngIf="selectedNode">
-    <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ selectedNode.name }}</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <ul>
-          <li *ngFor="let child of selectedNode.children">
-            <mat-icon>{{ hasChild(0, child) ? 'folder' : 'insert_drive_file' }}</mat-icon>
-            {{ child.name }}
-          </li>
-        </ul>
-        <input type="file" (change)="onFileUpload($event)" />
-      </mat-card-content>
-    </mat-card>
+  
+  <div class="content">
+    <div class="header">
+      <div class="breadcrumbs">
+        @for (crumb of breadcrumbs; track $index) {
+          <ng-container>
+            <span (click)="breadcrumbClick(crumb)">{{ crumb }}</span>
+            @if($index < breadcrumbs.length - 1) {
+              <ng-container> &gt; </ng-container>
+            }
+          </ng-container>
+        }
+      </div>
+      <label class="upload-btn">
+        Upload File
+        <input type="file" (change)="uploadFile($event)" />
+      </label>
+    </div>
+    
+    @if(currentDirectory) {
+      <div class="file-list">
+        @if (currentDirectory.files.length == 0) {
+          <h4>No Files in {{ currentDirectory.name }}</h4>
+        }
+        @else {
+          <h4>Files in uploaded in {{ currentDirectory.name }}</h4>
+          <ul>
+            @for (file of currentDirectory.files; track $index) {
+              <li>{{ file }}</li>
+            }
+          </ul>
+        }
+      </div>
+
+    }
   </div>
 </div>

@@ -1,0 +1,54 @@
+table {
+    width: 100%;
+
+  }
+  th.mat-header-cell, td.mat-cell {
+    text-align: center;
+  }
+
+  .toolbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  
+  .search-container {
+    max-width: 300px;
+  }
+
+  .add-btn,
+.search-btn {
+  background-color: rgb(68, 127, 236); // Primary color
+  color: white; // Text color
+  
+  &:hover {
+    background-color: rgb(40, 40, 230); // Darker shade on hover
+  }
+}
+
+  .search-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .search-container {
+    position: relative;
+  }
+  
+  .search-bar {
+    position: relative; /* Create a positioning context for the button */
+  }
+  
+  .input-container {
+    position: relative;
+  }
+  
+  .search-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%); /* Center vertically */
+    height: 40px; /* Match the height of mat-form-field */
+    padding: 0 16px; /* Adjust padding as needed */
+  }
+  

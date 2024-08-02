@@ -1,1 +1,48 @@
-<p>users works!</p>
+<ng-container>
+    <div class="toolbar">
+        <button class="add-btn" mat-button (click)="addNew()">Add New</button>
+        <div class="search-container">
+            <mat-form-field appearance="outline" class="search-bar">
+              <mat-label>Search</mat-label>
+              <div class="input-container">
+                <input matInput (input)="applyFilter($event)" placeholder="Search">
+                <button mat-button color="primary" class="search-btn" (click)="performSearch()">Search</button>
+              </div>
+            </mat-form-field>
+          </div>          
+      </div>
+
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    @for (column of columns; track $index) {
+        <ng-container [matColumnDef]="column.columnDef">
+          <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.columnDef : ''">
+            {{ column.header }}
+          </th>
+          <td mat-cell *matCellDef="let user">
+            @switch (column.type) {
+                @case ('checkbox') {
+                    <ng-container>
+                        <mat-checkbox class="checkbox" [formControl]="user[column.columnDef + 'Ctrl']"></mat-checkbox>
+                    </ng-container>
+                   }
+                @case ('action') {
+                    <ng-container>
+                        <button mat-button (click)="performAction(user)">{{ column.header }}</button>
+                    </ng-container>
+                    
+                }
+                @default {
+                    <ng-container>
+                        <span >{{ user[column.columnDef] || '--' }}</span>
+                    </ng-container>
+                }
+            }
+          </td>
+        </ng-container>
+    }
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</ng-container>

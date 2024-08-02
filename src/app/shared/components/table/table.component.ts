@@ -1,52 +1,58 @@
 import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { FormsModule } from '@angular/forms';
+import { MatSortModule } from '@angular/material/sort';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { MatIconModule } from '@angular/material/icon';
 
-interface ColumnDefinition {
-  field: string;
+
+interface TableColumn {
+  columnDef: string;
   header: string;
+  type: 'checkbox' | 'action' | 'string';
   sortable?: boolean;
-  actions?: { icon: string; callback: (element: any) => void }[];
 }
 
 @Component({
   selector: 'app-table',
   standalone: true,
   imports: [
+    CommonModule,
     MatTableModule,
-    MatIconModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatListModule,
     MatCheckboxModule,
-    FormsModule
+    ReactiveFormsModule,
+    MatSortModule,
+    MatButtonModule,
+    MatIconModule,
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
 export class TableComponent {
-  @Input() displayedColumns: ColumnDefinition[] = [];
-  @Input() dataSource: any = new MatTableDataSource<any>();
+  @Input() columns: TableColumn[] = [];
+  @Input() dataSource: any = [];
   sortDirection: { [key: string]: 'asc' | 'desc' } = {};
   columnFields: string[] = [];
+  displayedColumns: string[] = [];
 
   ngOnInit() {
-    this.columnFields = this.displayedColumns.map(col => col.field);
-    this.displayedColumns.forEach(col => {
-      if (col.sortable) {
-        this.sortDirection[col.field] = 'asc';
-      }
+    this.displayedColumns = this.columns.map((column) => column.columnDef);
+    this.dataSource.forEach((item: any) => {
+      item['selected'] = false;
+      this.columns.forEach((column) => {
+        if (column.type === 'checkbox') {
+          item[column.columnDef + 'Ctrl'] = new FormControl(item[column.columnDef]);
+        }   
+        if (column.sortable) {
+          this.sortDirection[column.header] = 'asc';
+        }
+      });
     });
   }
 
   sortData(column: string) {
-    console.log('here')
     if (this.sortDirection[column] === 'asc') {
       this.dataSource.data = this.dataSource.data.sort((a: any, b: any) => (a[column] > b[column] ? 1 : -1));
       this.sortDirection[column] = 'desc';
@@ -54,6 +60,16 @@ export class TableComponent {
       this.dataSource.data = this.dataSource.data.sort((a: any, b: any) => (a[column] < b[column] ? 1 : -1));
       this.sortDirection[column] = 'asc';
     }
+  }
+
+  performAction(user: any) {
+    // Implement action logic here based on the user data
+    console.log('Performing action for user:', user);
+  }
+
+  toggleAll(event: any) {
+    const checked = event.checked;
+    this.dataSource.forEach((item: any) => (item['selected'] = checked));
   }
 
   loadMore() {
@@ -64,3 +80,4 @@ export class TableComponent {
     this.dataSource = [...this.dataSource, ...newData];
   }
 }
+ 

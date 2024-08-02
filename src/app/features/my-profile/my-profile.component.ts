@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
     MatCardModule         // Import MatCardModule for Material cards
   ],
   templateUrl: './my-profile.component.html',
-  styleUrls: ['./my-profile.component.css']
+  styleUrls: ['./my-profile.component.scss']
 })
 export class MyProfileComponent {
   @HostBinding('class.dark-theme') darkTheme = false;

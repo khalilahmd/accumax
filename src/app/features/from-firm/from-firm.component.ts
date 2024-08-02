@@ -3,20 +3,22 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
+import { FileUploaderComponent } from '../../shared/components/file-uploader';
 
 @Component({
-  selector: 'app-documents',
+  selector: 'app-from-firm',
   standalone: true,
   imports: [
     CommonModule,
     MatButtonModule,
     MatCardModule,
-    MatTabsModule
+    MatTabsModule,
+    FileUploaderComponent
   ],
-  templateUrl: './documents.component.html',
-  styleUrls: ['./documents.component.css']
+  templateUrl: './from-firm.component.html',
+  styleUrls: ['./from-firm.component.scss']
 })
-export class DocumentsComponent {
+export class FromFirmComponent {
   allCards = [
     { title: 'Document 1', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' },
     { title: 'Document 2', content: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },

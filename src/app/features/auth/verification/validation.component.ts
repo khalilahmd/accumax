@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-validation',
   standalone: true,
   templateUrl: './validation.component.html',
-  styleUrls: ['./validation.component.css'],
+  styleUrls: ['./validation.component.scss'],
   imports: [
     CommonModule,
     ReactiveFormsModule,

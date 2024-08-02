@@ -1,72 +1,87 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { MatTreeModule } from '@angular/material/tree';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatCardModule } from '@angular/material/card';
-import { BehaviorSubject } from 'rxjs';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource } from '@angular/material/tree';
+import { Component, Input, input } from '@angular/core';
 
-interface FileNode {
+interface Directory {
   name: string;
-  children?: FileNode[];
-  path?: string;
+  files: string[];
+  subDirectories?: Directory[];
+  isExpanded?: boolean; 
 }
-
-const TREE_DATA: FileNode[] = [
-  {
-    name: 'root',
-    path: 'root',
-    children: [
-      { name: 'folder1', path: 'root/folder1', children: [{ name: 'file1', path: 'root/folder1/file1' }, { name: 'file2', path: 'root/folder1/file2' }] },
-      { name: 'folder2', path: 'root/folder2', children: [{ name: 'folder3', path: 'root/folder2/folder3', children: [{ name: 'file3', path: 'root/folder2/folder3/file3' }] }] },
-    ]
-  }
-];
-
 
 @Component({
   selector: 'app-file-uploader',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatTreeModule,
-    MatIconModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatToolbarModule,
-    MatCardModule,
-  ],
+  imports: [],
   templateUrl: './file-uploader.component.html',
   styleUrl: './file-uploader.component.scss'
 })
-export class FileUploaderComponent { 
-  treeControl = new NestedTreeControl<FileNode>(node => node.children);
-  dataSource = new MatTreeNestedDataSource<FileNode>();
-  selectedNode: FileNode | null = null;
+export class FileUploaderComponent {
+  @Input() source: string = 'Directories'
+  directories: Directory[] = [
+    {
+      name: 'Root',
+      files: [],
+      isExpanded: false,
+      subDirectories: [
+        {
+          name: 'Documents',
+          files: ['File1.txt', 'File2.pdf', 'Project1.docx', 'Project2.pptx'],
+          isExpanded: false,
+          // subDirectories: [
+          //   {
+          //     name: 'Projects',
+          //     files: ['Project1.docx', 'Project2.pptx'],
+          //     isExpanded: false,
+          //     subDirectories: [
+          //       {
+          //         name: '2024',
+          //         files: ['Project2024.docx', 'Report2024.pdf']
+          //       }
+          //     ]
+          //   }
+          // ]
+        },
+        {
+          name: 'Images',
+          files: ['Image1.png', 'Image2.jpg', 'Beach.png', 'Mountain.jpg'],
+          isExpanded: false,
+          // subDirectories: [
+          //   {
+          //     name: 'Vacation',
+          //     files: ['Beach.png', 'Mountain.jpg']
+          //   }
+          // ]
+        }
+      ]
+    }
+  ];
 
-  constructor() {
-    this.dataSource.data = TREE_DATA;
+  currentDirectory: Directory | null = null;
+  breadcrumbs: string[] = [];
+
+  // Set the current directory and update breadcrumbs
+  openDirectory(event: MouseEvent, directory: Directory) {
+    event.stopPropagation()
+    directory.isExpanded = directory.subDirectories ? !directory.isExpanded : false;
+    this.currentDirectory = directory;
+    // if(!directory.subDirectories) {
+    // this.breadcrumbs = [...this.breadcrumbs, directory.name];
+    // } else {
+      this.breadcrumbs = [directory.name];
+    // }
+    // Update breadcrumbs based on current directory's path
   }
 
-  hasChild = (_: number, node: FileNode) => !!node.children && node.children.length > 0;
-
-  onNodeClick(node: FileNode) {
-    this.selectedNode = node;
+  // Handle breadcrumb click
+  breadcrumbClick(name: string) {
+    // Logic to handle breadcrumb click
   }
 
-  onFileUpload(event: any) {
-    const file = event.target.files[0];
-    if (file && this.selectedNode) {
-      if (!this.selectedNode.children) {
-        this.selectedNode.children = [];
-      }
-      this.selectedNode.children.push({ name: file.name, path: `${this.selectedNode.path}/${file.name}` });
+  uploadFile(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      const file = input.files[0];
+      // Handle file upload logic here
+      this.currentDirectory?.files.push(file.name)
     }
   }
 }

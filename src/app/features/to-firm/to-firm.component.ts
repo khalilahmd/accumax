@@ -8,6 +8,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSortModule } from '@angular/material/sort';
+import { FileUploaderComponent } from '../../shared/components/file-uploader';
 
 @Component({
   selector: 'app-to-firm',
@@ -20,7 +21,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatIconModule,
     MatTableModule,
     MatCheckboxModule,
-    MatSortModule
+    MatSortModule,
+    FileUploaderComponent
 ],
   templateUrl: './to-firm.component.html',
   styleUrl: './to-firm.component.scss'

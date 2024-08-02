@@ -5,7 +5,7 @@ import { ValidationComponent } from './features/auth/verification';
 import { HomeComponent } from './features/home';
 import { LayoutComponent } from './shared/components/layout';
 import { OnBoardingComponent } from './features/on-boarding';
-import { DocumentsComponent } from './features/documents';
+import { FromFirmComponent } from './features/from-firm';
 import { ToFirmComponent } from './features/to-firm';
 import { ContactUsComponent } from './features/contact-us';
 import { MyProfileComponent } from './features/my-profile';
@@ -33,7 +33,7 @@ export const routes: Routes = [
       },
       {
         path: 'from-firm',
-        component: DocumentsComponent
+        component: FromFirmComponent
       },
       {
         path: 'to-firm',
