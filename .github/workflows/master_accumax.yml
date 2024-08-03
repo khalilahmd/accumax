@@ -34,7 +34,7 @@ jobs:
           path: .
 
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
     environment:
       name: 'Production'
@@ -51,6 +51,5 @@ jobs:
         id: deploy-to-webapp
         with:
           app-name: 'accumax'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B8707D01734C4FC3A6683D19487811BE }}
-          package: .
+          package: 'dist/accumax/browser'
+          publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
