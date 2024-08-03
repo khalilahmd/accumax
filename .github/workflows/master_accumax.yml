@@ -50,7 +50,6 @@ jobs:
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
-        enableDeleteFiles: true
         with:
           app-name: 'accumax'
           package: 'dist/accumax'
