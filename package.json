@@ -2,7 +2,7 @@
   "scripts": {
     "ng": "ng serve",
     "build": "ng build",
-    "build-prod": "ng build --configuration=production --output-hashing=all"
+    "build-prod": "ng build --configuration production"
   },
   "dependencies": {
     "@agm/core": "^3.0.0-beta.0",
