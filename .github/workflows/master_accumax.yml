@@ -21,18 +21,17 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: npm install, build, and test
-        run:
-          npm install --force
-          # npm run build --if-present
-          # npm run test --if-present
-          ng build --configuration production
+      - name: Install dependencies
+        run: npm install --force
+
+      - name: Build Angular project
+        run: ng build --configuration production
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
         with:
           name: node-app
-          path: .
+          path: dist/accumax
 
   deploy:
     runs-on: windows-latest
@@ -46,11 +45,12 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: node-app
+          path: dist/accumax
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
         id: deploy-to-webapp
         with:
           app-name: 'accumax'
-          package: './accumax'
+          package: 'dist/accumax'
           publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
