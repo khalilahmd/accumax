@@ -40,7 +40,7 @@ export class ValidationComponent {
     if (this.validationForm.valid) {
       const code = `${this.validationForm.get('code1')?.value}${this.validationForm.get('code2')?.value}${this.validationForm.get('code3')?.value}${this.validationForm.get('code4')?.value}${this.validationForm.get('code5')?.value}${this.validationForm.get('code6')?.value}`;
       if (code === '000000') {
-        this.router.navigate(['/dashboard'])
+        this.router.navigate(['/home'])
         this.isCodeValid = true;
       } else {
         this.isCodeValid = false;
