@@ -13,6 +13,9 @@ import { AuthGuard } from './core/guards/auth.guard';
 import { DataViewerComponent } from './features/data-viewer';
 import { CpaBotComponent } from './features/cpa-bot';
 import { UsersComponent } from './features/users';
+import { FromCPAComponent } from './features/from-cpa';
+import { ToCPAComponent } from './features/to-cpa';
+import { ContentAdminComponent } from './features/content-admin';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -32,12 +35,20 @@ export const routes: Routes = [
         component: OnBoardingComponent
       },
       {
-        path: 'from-firm',
+        path: 'from-client',
         component: FromFirmComponent
       },
       {
-        path: 'to-firm',
+        path: 'to-client',
         component: ToFirmComponent
+      },
+      {
+        path: 'from-cpa',
+        component: FromCPAComponent
+      },
+      {
+        path: 'to-cpa',
+        component: ToCPAComponent
       },
       {
         path: 'from-data-viewer',
@@ -48,7 +59,7 @@ export const routes: Routes = [
         component: CpaBotComponent
       },
       {
-        path: 'support',
+        path: 'help',
         component: ContactUsComponent
       },
       {
@@ -56,8 +67,12 @@ export const routes: Routes = [
         component: MyProfileComponent
       },
       {
-        path: 'users',
+        path: 'user-admin',
         component: UsersComponent
+      },
+      {
+        path: 'content-admin',
+        component: ContentAdminComponent
       }
     ],
     // canActivate: [AuthGuard]

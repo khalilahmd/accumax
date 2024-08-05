@@ -30,7 +30,7 @@ interface MenuItem {
 })
 export class HeaderComponent {
   @ViewChild('sidenav') sidenav!: MatSidenav
-  username = 'John';
+  username = 'Nagesh';
   isDropdownOpen = false;
 
   menuItems: MenuItem[] = [

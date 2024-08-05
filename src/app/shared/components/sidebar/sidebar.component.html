@@ -1,22 +1,30 @@
-  <div class="sidenav-container">
-    <div #sidenav class="sidenav">
-      <div class="nav-list">
-        @for (item of menuItems; track trackByFn) {
-          <div class="nav-item" [routerLink]="item.route" 
-          routerLinkActive="active" 
-          (click)="onNavItemClick(item)">
-            <mat-icon class="item-icon">{{ item.icon }}</mat-icon>
-          @if (showText) {
-            <span class="item-text">{{ item.name }}</span>
-          }
-        </div>
-        }
-      </div>
-      <!-- <div class="toggle-button-container">
-        <button mat-icon-button (click)="toggleText()" class="toggle-button">
-          <mat-icon>{{ showText ?  'menu_open' : 'menu' }}</mat-icon>
-        </button>
-      </div> -->
+<div class="sidenav-container">
+  <div class="sidenav">
+    <div class="nav-list">
+      @for (category of menuCategories; track $index) {
+        <ng-container>
+          <div class="nav-category">
+            <div class="category-header" (click)="category.isOpen = !category.isOpen">
+              {{ category.name }}
+              <!-- <mat-icon class="expand-icon">{{ category.isOpen ? 'expand_less' : 'expand_more' }}</mat-icon> -->
+            </div>
+            @if (category.isOpen) {
+              <div class="category-items">
+                @for (item of category.items; track $index) {
+                  <div class="nav-item"
+                    [routerLink]="item.route" routerLinkActive="active" (click)="onNavItemClick(item)">
+                    <mat-icon class="item-icon">{{ item.icon }}</mat-icon>
+                    @if (showText) {
+                      <span class="item-text">{{ item.name }}</span>
+                    }
+                    
+                  </div>
+                }
+              </div>
+            }
+          </div>
+        </ng-container>
+      }
     </div>
-  </div>
-  
+    </div>
+</div>

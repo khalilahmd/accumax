@@ -20,19 +20,49 @@ import { Router, NavigationEnd, RouterModule } from '@angular/router';
   styleUrls: ['./sidebar.component.scss']
 })
 export class SidebarComponent {
-  isOpen = true;
   showText = true;
   activeRoute: string | null = null;
-  menuItems = [
-    { icon: 'home', name: 'Home', route: '/home' },
-    { icon: 'info', name: 'On Boarding', route: '/on-boarding' },
-    { icon: 'smart_toy', name: 'CPA Bot', route: '/cpa-bot' },
-    { icon: 'download_file', name: 'From Firm', route: '/from-firm' },
-    { icon: 'upload_file', name: 'To Firm', route: '/to-firm' },
-    // { icon: 'contact_mail', name: 'From Data Viewer', route: '/from-data-viewer' },
-    { icon: 'person', name: 'My Profile', route: '/profile' },
-    { icon: 'group', name: 'Users', route: '/users' },
-    { icon: 'support', name: 'Support', route: '/support' },
+  menuCategories = [
+    {
+      name: 'Client Portal',
+      isOpen: false,
+      items: [
+        { icon: 'home', name: 'Home', route: '/home' },
+        { icon: 'info', name: 'On Boarding', route: '/on-boarding' },
+        { icon: 'download_file', name: 'From CPA', route: '/from-cpa' },
+        { icon: 'upload_file', name: 'To CPA', route: '/to-cpa' },
+        { icon: 'person', name: 'My Profile', route: '/profile' },
+        { icon: 'support', name: 'Help', route: '/help' },
+      ]
+    },
+    {
+      name: 'CPA Portal',
+      isOpen: false,
+      items: [
+        { icon: 'home', name: 'Home', route: '/home' },
+        { icon: 'download_file', name: 'From Client', route: '/from-client' },
+        { icon: 'upload_file', name: 'To Client', route: '/to-client' },
+        { icon: 'smart_toy', name: 'CPA Bot', route: '/cpa-bot' },
+        { icon: 'smart_toy', name: 'Content Admin', route: '/content-admin' },
+        { icon: 'group', name: 'User-Admin', route: '/user-admin' },
+        { icon: 'support', name: 'Help', route: '/help' }
+      ]
+    },
+    // {
+    //   name: 'User Management',
+    //   isOpen: false,
+    //   items: [
+    //     { icon: 'person', name: 'My Profile', route: '/profile' },
+    //     { icon: 'group', name: 'Users', route: '/users' }
+    //   ]
+    // },
+    // {
+    //   name: 'Support',
+    //   isOpen: false,
+    //   items: [
+    //     { icon: 'support', name: 'Support', route: '/support' }
+    //   ]
+    // }
   ];
 
   constructor(private readonly router: Router) {
@@ -42,20 +72,20 @@ export class SidebarComponent {
         this.activeRoute = this.router.url;
       });
   }
-  // toggleSidebar() {
-  //   this.isOpen = !this.isOpen;
-  // }
 
   toggleText() {
     this.showText = !this.showText;
   }
 
   trackByFn(index: number, item: any): number {
-    return index; // or item.id if your items have unique ids
+    return index;
   }
 
-  onNavItemClick = (item: any) => {
+  onNavItemClick(item: any) {
     this.router.navigate([item.route]);
-    // Additional logic if needed
+  }
+
+  isCategoryActive(category: any): boolean {
+    return category.items.some((item: any) => this.activeRoute?.includes(item.route));
   }
 }

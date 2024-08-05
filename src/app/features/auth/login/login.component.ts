@@ -29,17 +29,14 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]]
     });
   }
-  onSubmit = () => {
-    console.log('here we are')    
+  onSubmit = () => {  
     if (this.loginForm.valid) { 
       const email = this.loginForm.get('email')?.value;
-      console.log('Email:', email);
-       if (email === 'admin@bfirst.ai') {
+       if (email === 'nagesh@gmail.com') {
           this.emailExist = true;
           this.router.navigateByUrl('/validate')
         } else {
           this.emailExist = false;
-          console.log(this.emailExist)
         }
     }
    

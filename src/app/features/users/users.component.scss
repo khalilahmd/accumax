@@ -8,8 +8,9 @@ table {
 
   .toolbar {
     display: flex;
+    padding: 15px;
     justify-content: space-between;
-    margin-bottom: 16px;
+    // margin-bottom: 10px;
   }
   
   .search-container {
@@ -30,7 +31,7 @@ table {
     display: flex;
     align-items: center;
   }
-  
+
   .search-container {
     position: relative;
   }

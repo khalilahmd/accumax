@@ -5,7 +5,7 @@
       @for (dir of directories; track $index) {
         <li (click)="openDirectory($event, dir)">
           <i class="material-icons">{{ (dir.isExpanded && dir.subDirectories) ? 'folder_open' : 'folder' }}</i>
-          {{ dir.name }}
+          <span class="dir-name">{{ dir.name }}</span>
           <!-- @if (dir.subDirectories) {
             <span class="toggle-icon">
               {{ dir.isExpanded ? '-' : '+' }}
@@ -60,24 +60,29 @@
           </ng-container>
         }
       </div>
-      <label class="upload-btn">
-        Upload File
-        <input type="file" (change)="uploadFile($event)" />
-      </label>
+      @if (currentDirectory.name !== 'Documents') {
+        <label class="upload-btn">
+          Upload File
+          <input type="file" (change)="uploadFile($event)" />
+        </label>
+      }
     </div>
     
     @if(currentDirectory) {
       <div class="file-list">
-        @if (currentDirectory.files.length == 0) {
-          <h4>No Files in {{ currentDirectory.name }}</h4>
-        }
-        @else {
-          <h4>Files in uploaded in {{ currentDirectory.name }}</h4>
-          <ul>
-            @for (file of currentDirectory.files; track $index) {
-              <li>{{ file }}</li>
-            }
-          </ul>
+        @if (currentDirectory.name !== 'Documents') {
+
+          @if (currentDirectory.files.length == 0) {
+            <h4>No Documents uploaded in {{ currentDirectory.name }}</h4>
+          }
+          @else {
+            <h4>Files uploaded in {{ currentDirectory.name }}</h4>
+            <ul>
+              @for (file of currentDirectory.files; track $index) {
+                <li>{{ file }}</li>
+              }
+            </ul>
+          }
         }
       </div>
 

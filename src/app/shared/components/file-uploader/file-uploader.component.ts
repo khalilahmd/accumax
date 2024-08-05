@@ -1,4 +1,4 @@
-import { Component, Input, input } from '@angular/core';
+import { Component, Input, OnInit, input } from '@angular/core';
 
 interface Directory {
   name: string;
@@ -14,50 +14,45 @@ interface Directory {
   templateUrl: './file-uploader.component.html',
   styleUrl: './file-uploader.component.scss'
 })
-export class FileUploaderComponent {
+export class FileUploaderComponent implements OnInit {
   @Input() source: string = 'Directories'
   directories: Directory[] = [
     {
-      name: 'Root',
+      name: 'Documents',
       files: [],
       isExpanded: false,
       subDirectories: [
         {
-          name: 'Documents',
-          files: ['File1.txt', 'File2.pdf', 'Project1.docx', 'Project2.pptx'],
+          name: '2024',
+          files: ['invoice4.pdf', 'e-filed4.pdf', 'doc4.png'],
           isExpanded: false,
-          // subDirectories: [
-          //   {
-          //     name: 'Projects',
-          //     files: ['Project1.docx', 'Project2.pptx'],
-          //     isExpanded: false,
-          //     subDirectories: [
-          //       {
-          //         name: '2024',
-          //         files: ['Project2024.docx', 'Report2024.pdf']
-          //       }
-          //     ]
-          //   }
-          // ]
         },
         {
-          name: 'Images',
-          files: ['Image1.png', 'Image2.jpg', 'Beach.png', 'Mountain.jpg'],
-          isExpanded: false,
-          // subDirectories: [
-          //   {
-          //     name: 'Vacation',
-          //     files: ['Beach.png', 'Mountain.jpg']
-          //   }
-          // ]
+          name: '2023',
+          files: ['invoice3.pdf', 'e-filed3.pdf', 'doc3.png', 'Texas3.pdf'],
+          isExpanded: false
+        },
+        {
+          name: '2022',
+          files: ['invoice2.pdf', 'Texas2.pdf'],
+          isExpanded: false
+        },
+        {
+          name: '2021',
+          files: ['invoice1.pdf'],
+          isExpanded: false
         }
       ]
     }
   ];
 
-  currentDirectory: Directory | null = null;
+  currentDirectory: Directory | any = null;
   breadcrumbs: string[] = [];
 
+
+  ngOnInit(): void {
+    this.currentDirectory = this.directories[0]
+  }
   // Set the current directory and update breadcrumbs
   openDirectory(event: MouseEvent, directory: Directory) {
     event.stopPropagation()

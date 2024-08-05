@@ -13,7 +13,8 @@ import { BotViewComponent } from '../../shared/components/bot-view';
   styleUrls: ['./on-boarding.component.scss']
 })
 export class OnBoardingComponent implements OnInit {
-  botUrl: string = 'https://copilotstudio.microsoft.com/environments/Default-0cd12112-850e-4380-a038-463fdbb94581/bots/crf19_taxDataCollectionV001_rqxk2l/webchat?__version__=2%22'
+  botUrl: string = 'https://copilotstudio.microsoft.com/environments/Default-0cd12112-850e-4380-a038-463fdbb94581/bots/crf19_taxDataCollectionV001_rqxk2l/webchat?__version__=2';
+  // botUrl: string = 'https://copilotstudio.microsoft.com/environments/Default-0cd12112-850e-4380-a038-463fdbb94581/bots/crf19_taxDataCollectionV001_rqxk2l/webchat?__version__=2%22'
 
   ngOnInit(): void {
   }

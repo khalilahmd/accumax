@@ -52,9 +52,9 @@ export class UsersComponent implements OnInit {
     { columnDef: 'actions', header: 'Actions', type: 'action' },
   ];
   @Input() dataSource: User[] = [
-    { selected: false, lastName: 'Doe', firstName: 'John', email: 'john.doe@example.com', grantAccess: true, expiration: new Date('2024-12-31') },
+    { selected: false, lastName: 'Doe', firstName: 'John', email: 'john.doe@example.com', grantAccess: false, expiration: new Date('2024-12-31') },
     { selected: false, lastName: 'Smith', firstName: 'Jane', email: 'jane.smith@example.com', grantAccess: false, expiration: new Date('2024-11-30') },
-    { selected: false, lastName: 'Brown', firstName: 'Charlie', email: 'charlie.brown@example.com', grantAccess: true, expiration: null },
+    { selected: false, lastName: 'Brown', firstName: 'Charlie', email: 'charlie.brown@example.com', grantAccess: false, expiration: null },
   ];
 
   displayedColumns: string[] = [];

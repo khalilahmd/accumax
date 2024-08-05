@@ -25,7 +25,7 @@ export class MyProfileComponent {
     );
     document.documentElement.style.setProperty(
       '--text-color',
-      this.darkTheme ? 'white' : 'black'
+      this.darkTheme ? 'brown' : 'black'
     );
   }
 }
