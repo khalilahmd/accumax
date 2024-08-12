@@ -1,14 +1,33 @@
 import { Component, OnInit } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { MatTableDataSource } from '@angular/material/table';
+import { TableComponent } from '../../shared/components/table';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSortModule } from '@angular/material/sort';
 import { FileUploaderComponent } from '../../shared/components/file-uploader';
 
 @Component({
-  selector: 'app-to-cpa',
+  selector: 'app-to-client',
   standalone: true,
-  imports: [FileUploaderComponent],
-  templateUrl: './to-cpa.component.html',
-  styleUrl: './to-cpa.component.scss'
+  imports: [
+    CommonModule,
+    MatCardModule,
+    TableComponent,
+    MatButtonModule,
+    MatIconModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatSortModule,
+    FileUploaderComponent
+],
+  templateUrl: './to-client.component.html',
+  styleUrl: './to-client.component.scss'
 })
-export class ToCPAComponent implements OnInit {
+export class ToClientComponent implements OnInit {
   options: any = {}
   columns = [
     { columnDef: 'fileName', header: 'File Name', sortable: true, type: 'text', clickable: true },
@@ -67,12 +86,10 @@ export class ToCPAComponent implements OnInit {
   ngOnInit(): void {
     this.options = {
       search: false,
-      checkbox: false,
-      pagination: false,
       columns: this.columns,
       displayedColumns: this.columns.map(c => c.columnDef),
       data: this.dataToShow,
-      source: 'To CPA'
+      source: 'To Client'
     } 
   }
 }

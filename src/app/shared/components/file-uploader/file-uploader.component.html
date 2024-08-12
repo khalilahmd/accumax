@@ -1,39 +1,23 @@
 <div class="directory-viewer">
   <div class="sidebar">
-    <h2>{{source}}</h2>
+    <h2>{{options?.source}}</h2>
     <ul>
       @for (dir of directories; track $index) {
         <li (click)="openDirectory($event, dir)">
           <i class="material-icons">{{ (dir.isExpanded && dir.subDirectories) ? 'folder_open' : 'folder' }}</i>
           <span class="dir-name">{{ dir.name }}</span>
-          <!-- @if (dir.subDirectories) {
-            <span class="toggle-icon">
-              {{ dir.isExpanded ? '-' : '+' }}
-            </span>
-          } -->
           @if (dir.isExpanded && dir.subDirectories) {
             <ul>
               @for (subDir of dir.subDirectories; track $index) {
                 <li (click)="openDirectory($event, subDir)">
                   <i class="material-icons">{{ (subDir.isExpanded && subDir.subDirectories) ? 'folder_open' : 'folder' }}</i>
                   {{ subDir.name }}
-                  <!-- @if (subDir.subDirectories) {
-                    <span class="toggle-icon">
-                      {{ dir.isExpanded ? '-' : '+' }}
-                    </span>
-                  } -->
                   @if (subDir.isExpanded && subDir.subDirectories) {
                     <ul>
                       @for (subSubDir of subDir.subDirectories; track $index) {
                         <li (click)="openDirectory($event, subSubDir)">
                           <i class="material-icons">{{ ( subSubDir.subDirectories) ? 'folder_open' : 'folder' }}</i>
-                          {{ subSubDir.name }} 
-                           <!-- @if (subSubDir.subDirectories) {
-                            <span class="toggle-icon">
-                              {{ dir.isExpanded ? '-' : '+' }}
-                            </span>
-                          } -->
-                          <!-- Add more levels as needed -->
+                          {{ subSubDir.name }}
                         </li>
                       }
                     </ul>
@@ -47,8 +31,10 @@
       }
     </ul>
   </div>
-  
-  <div class="content">
+  <div class="table">
+    <app-table [options]="options"/>
+  </div>
+  <!-- <div class="content">
     <div class="header">
       <div class="breadcrumbs">
         @for (crumb of breadcrumbs; track $index) {
@@ -87,5 +73,5 @@
       </div>
 
     }
-  </div>
+  </div> -->
 </div>

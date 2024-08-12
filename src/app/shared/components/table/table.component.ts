@@ -1,19 +1,16 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatSortModule } from '@angular/material/sort';
+import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
-import { ReactiveFormsModule, FormControl } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-
-
-interface TableColumn {
-  columnDef: string;
-  header: string;
-  type: 'checkbox' | 'action' | 'string';
-  sortable?: boolean;
-}
+import { MatTableDataSource} from '@angular/material/table';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatInputModule } from '@angular/material/input';
+import {SelectionModel} from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-table',
@@ -26,58 +23,83 @@ interface TableColumn {
     MatSortModule,
     MatButtonModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatSort,
+    MatPaginatorModule,
+    MatInputModule
   ],
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss'
 })
-export class TableComponent {
-  @Input() columns: TableColumn[] = [];
-  @Input() dataSource: any = [];
-  sortDirection: { [key: string]: 'asc' | 'desc' } = {};
-  columnFields: string[] = [];
-  displayedColumns: string[] = [];
+export class TableComponent implements OnChanges, OnInit {
 
-  ngOnInit() {
-    this.displayedColumns = this.columns.map((column) => column.columnDef);
-    this.dataSource.forEach((item: any) => {
-      item['selected'] = false;
-      this.columns.forEach((column) => {
-        if (column.type === 'checkbox') {
-          item[column.columnDef + 'Ctrl'] = new FormControl(item[column.columnDef]);
-        }   
-        if (column.sortable) {
-          this.sortDirection[column.header] = 'asc';
-        }
-      });
-    });
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: false }) sort!: MatSort;
+  @Input() selection = new SelectionModel<Element>(true, []);
+  dataSource!: MatTableDataSource<any>;
+  @Input() options: any = {}
+  checkbox: boolean = false;
+  pagination: boolean = false;
+  search: boolean = false;
+  displayedColumns: any = [];
+  data: any = [];
+  columns: any = [];
+
+ ngOnChanges(changes: SimpleChanges) {
+  if (changes['options']) {
+    this.handleOptions(this.options);
+  }
+}
+
+handleOptions(options: any) {
+  const { search, checkbox, pagination, columns, displayedColumns, data } = options
+  this.search = search;
+  this.checkbox = checkbox;
+  this.pagination = pagination;
+  this.columns = columns;
+  this.displayedColumns = displayedColumns;
+  this.data = data
+
+}
+
+  ngOnInit(): void {
+  const { data } = this.options 
+  this.dataSource = new MatTableDataSource(this.data);
   }
 
-  sortData(column: string) {
-    if (this.sortDirection[column] === 'asc') {
-      this.dataSource.data = this.dataSource.data.sort((a: any, b: any) => (a[column] > b[column] ? 1 : -1));
-      this.sortDirection[column] = 'desc';
-    } else {
-      this.dataSource.data = this.dataSource.data.sort((a: any, b: any) => (a[column] < b[column] ? 1 : -1));
-      this.sortDirection[column] = 'asc';
-    }
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
   }
 
-  performAction(user: any) {
-    // Implement action logic here based on the user data
-    console.log('Performing action for user:', user);
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
-  toggleAll(event: any) {
-    const checked = event.checked;
-    this.dataSource.forEach((item: any) => (item['selected'] = checked));
+  handleClick(value: any) {
+    console.log('Clicked value:', value);
+    // Implement your logic here
   }
 
-  loadMore() {
-    const newData = [
-      { id: 4, name: 'Product 4', price: 40, icon: 'shopping_cart' },
-      { id: 5, name: 'Product 5', price: 45, icon: 'shopping_cart' }
-    ];
-    this.dataSource = [...this.dataSource, ...newData];
+  performAction(item: any) {
+    console.log('Action performed on:', item);
+    // Implement your action logic here
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  applyFilter(event: any) {
+    let filterValue = event.target.value
+    filterValue = filterValue.trim(); 
+    filterValue = filterValue.toLowerCase();
+    this.dataSource.filter = filterValue;
   }
 }
  

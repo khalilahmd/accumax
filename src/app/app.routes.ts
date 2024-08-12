@@ -5,9 +5,9 @@ import { ValidationComponent } from './features/auth/verification';
 import { HomeComponent } from './features/home';
 import { LayoutComponent } from './shared/components/layout';
 import { OnBoardingComponent } from './features/on-boarding';
-import { FromFirmComponent } from './features/from-firm';
-import { ToFirmComponent } from './features/to-firm';
-import { ContactUsComponent } from './features/contact-us';
+import { FromClientComponent } from './features/from-client';
+import { ToClientComponent } from './features/to-client';
+import { HelpComponent } from './features/help';
 import { MyProfileComponent } from './features/my-profile';
 import { AuthGuard } from './core/guards/auth.guard';
 import { DataViewerComponent } from './features/data-viewer';
@@ -36,11 +36,11 @@ export const routes: Routes = [
       },
       {
         path: 'from-client',
-        component: FromFirmComponent
+        component: FromClientComponent
       },
       {
         path: 'to-client',
-        component: ToFirmComponent
+        component: ToClientComponent
       },
       {
         path: 'from-cpa',
@@ -60,7 +60,7 @@ export const routes: Routes = [
       },
       {
         path: 'help',
-        component: ContactUsComponent
+        component: HelpComponent
       },
       {
         path: 'profile',

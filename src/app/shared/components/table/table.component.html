@@ -1,46 +1,52 @@
-<!-- 
+
 <div class="table-container">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
   
-      @for (column of displayedColumns; track $index) {
-          <ng-container [matColumnDef]="column.field">
-          <th mat-header-cell *matHeaderCellDef (click)="sortData(column.field)">
-          {{ column.header }}
-          @if (column.sortable) {
-            <mat-icon class="sort-icon">
-              {{ sortDirection[column.field] === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
-            </mat-icon>
+  @if (search) {
+  <div class="table-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Search">
+    </mat-form-field>
+  </div>
+}
+  
+  <table mat-table [dataSource]="dataSource" matSort class="custom-table">
+    @for (column of columns; track $index) {
+      <ng-container [matColumnDef]="column.columnDef">
+        <th mat-header-cell *matHeaderCellDef [mat-sort-header]="column.sortable ? column.columnDef : ''">
+          @if (checkbox) {
+           <mat-checkbox (change)="$event ? masterToggle() : null"
+                       [checked]="selection.hasValue() && isAllSelected()"
+                       [indeterminate]="selection.hasValue() && !isAllSelected()">
+         </mat-checkbox>
+         }
+            {{ column.header }}
+        </th> 
+        <td mat-cell *matCellDef="let item">
+            @if (checkbox) {
+              <mat-checkbox class="checkbox" (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(item) : null"
+              [checked]="selection.isSelected(item)"></mat-checkbox>
+            }
+          @switch (column.type) {
+            @case ('action') {
+              <button mat-button (click)="performAction(item)">{{ column.header }}</button>
+            }
+            @default {
+              <ng-container>
+                <span [class.clickable]="column.clickable" (click)="handleClick(item[column.columnDef])">
+                  {{ item[column.columnDef] || '--' }}
+                </span>
+              </ng-container>
+            }
           }
-        </th>
-            <td mat-cell *matCellDef="let element">
-              @if (column.field === 'icon') {
-                  <ng-container>
-                    <mat-icon>{{ element[column.field] }}</mat-icon>
-                  </ng-container>
-              }    
-              @if (column.field !== 'icon' && !column.actions) {
-                  <ng-container>
-                      {{ element[column.field] }}
-                  </ng-container>
-              }
-              @if (column.actions) {
-                  <ng-container>
-                      @for (action of column.actions; track $index) {
-                          <button mat-icon-button (click)="action.callback(element)">
-                            <mat-icon>{{ action.icon }}</mat-icon>
-                          </button>
-                      }
-                  </ng-container>
-              }
-            </td>
-          </ng-container>
-  
-      }
-      <tr mat-header-row *matHeaderRowDef="columnFields" class="header-row"></tr>
-      <tr mat-row *matRowDef="let row; columns: columnFields;"></tr>
-    </table>
+        </td>
+      </ng-container>
+    }
 
-</div> -->
-
-
-  
+    <tr mat-header-row *matHeaderRowDef="options?.displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: options.displayedColumns;"></tr>
+  </table>
+  @if (pagination) {
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+  }
+</div>

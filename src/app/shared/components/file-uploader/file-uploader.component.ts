@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, input } from '@angular/core';
+import { TableComponent } from '../table';
 
 interface Directory {
   name: string;
@@ -10,12 +11,13 @@ interface Directory {
 @Component({
   selector: 'app-file-uploader',
   standalone: true,
-  imports: [],
+  imports: [TableComponent],
   templateUrl: './file-uploader.component.html',
   styleUrl: './file-uploader.component.scss'
 })
 export class FileUploaderComponent implements OnInit {
-  @Input() source: string = 'Directories'
+
+  @Input() options: any = {}
   directories: Directory[] = [
     {
       name: 'Documents',

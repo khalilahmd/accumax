@@ -9,5 +9,5 @@ import { BotViewComponent } from '../../shared/components/bot-view';
   styleUrl: './content-admin.component.scss'
 })
 export class ContentAdminComponent {
- botUrl: string = 'https://web.powerva.microsoft.com/environments/b239cbb7-fcb5-e284-956f-4fa54d855300/bots/cr716_Bfirst_test_bot/webchat?__version__=2'
+ botUrl: string = 'https://org777c71ef.crm.dynamics.com/main.aspx?appid=fcc48c60-da53-ef11-a317-6045bda960d5'
 }

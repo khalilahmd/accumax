@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { FileUploaderComponent } from "../../shared/components/file-uploader/file-uploader.component";
 
 @Component({
-  selector: 'app-contact-us',
+  selector: 'app-help',
   standalone: true,
   imports: [MatCardModule, CommonModule, FileUploaderComponent],
-  templateUrl: './contact-us.component.html',
-  styleUrl: './contact-us.component.scss'
+  templateUrl: './help.component.html',
+  styleUrl: './help.component.scss'
 })
-export class ContactUsComponent {
+export class HelpComponent {
 
 }
